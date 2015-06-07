@@ -28,10 +28,7 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name="com.apache.mina.client.service.PushService"
-            android:exported="true"
-            android:process=":remote" >
+        <service android:name="com.apache.mina.client.service.PushService" >
         </service>
     </application>
 

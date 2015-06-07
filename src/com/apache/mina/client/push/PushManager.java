@@ -66,15 +66,15 @@ public class PushManager {
 		connector = new NioSocketConnector();
 		connector.setConnectTimeoutMillis(Config.SOCKET_CONNECT_TIMEOUT);
 		connector.setHandler(new ClientSessionHandler());
-//		connector.getFilterChain().addLast("codec",
-//				new ProtocolCodecFilter(new ObjectSerializationCodecFactory()));
-//		connector.getFilterChain().addLast(
-//				"keepalive",
-//				new KeepAliveFilter(new ClientKeepAliveMessageFactoryImp(),
-//						IdleStatus.READER_IDLE,
-//						KeepAliveRequestTimeoutHandler.DEAF_SPEAKER,
-//						Config.KEEP_ALIVE_TIME_INTERVAL,
-//						Config.KEEP_ALIVE_RESPONSE_TIMEOUT));
+		connector.getFilterChain().addLast("codec",
+				new ProtocolCodecFilter(new ObjectSerializationCodecFactory()));
+		connector.getFilterChain().addLast(
+				"keepalive",
+				new KeepAliveFilter(new ClientKeepAliveMessageFactoryImp(),
+						IdleStatus.READER_IDLE,
+						KeepAliveRequestTimeoutHandler.DEAF_SPEAKER,
+						Config.KEEP_ALIVE_TIME_INTERVAL,
+						Config.KEEP_ALIVE_RESPONSE_TIMEOUT));
 	}
 
 	/**
@@ -100,13 +100,16 @@ public class PushManager {
 							connectFuture = connector
 									.connect(new InetSocketAddress(
 											Config.HOSTNAME, Config.PORT));
+							Log.e(Tag, "wait connect!");
 							connectFuture.awaitUninterruptibly();
+							Log.e(Tag, "connect!");
 							session = connectFuture.getSession();
 							Log.e(Tag,
 									"manager connect"
 											+ android.os.Process.myPid() + '-'
 											+ android.os.Process.myTid());
 						} catch (Exception e) {
+							Log.e(Tag, "ªÒ»°session ß∞‹!");
 							return false;
 						}
 						return true;
